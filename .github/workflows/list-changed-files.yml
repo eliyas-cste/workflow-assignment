@@ -18,9 +18,12 @@ jobs:
           fetch-depth: 2
 
       - name: Get list of changed files
-        id: changed-files
+               id: changed-files
         run: |
           files=$(git diff --name-only HEAD^ HEAD)
           echo "Changed files:"
           echo "$files"
-          echo "files=$files" >> $GITHUB_OUTPUT
+          # Save properly formatted multi-line output
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$files" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
